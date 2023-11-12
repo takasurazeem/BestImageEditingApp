@@ -63,7 +63,7 @@ struct MultipleSelectView: View {
                     selection: $selectedItems,
                     matching: .images
                 ) {
-                    Text("Pick Photo")
+                    Text("Select Photos")
                 }
                 .onChange(of: selectedItems) {
                     images = []
@@ -92,7 +92,7 @@ struct MultipleSelectView: View {
             }
             Section {
                 Button {
-                    saveAndDeleteImages()
+                    saveImages()
                 } label: {
                     Text("Save")
                 }
@@ -126,7 +126,8 @@ struct MultipleSelectView: View {
             }
         }
     }
-    func saveAndDeleteImages() {
+    
+    func saveImages() {
         // Request photo library access
         PHPhotoLibrary.requestAuthorization(for: .readWrite) { status in
             if status == .authorized {
@@ -143,30 +144,12 @@ struct MultipleSelectView: View {
                         }
                     }
                 }
-                
-                // TODO: Fix later.
-                //                        // Delete the previously selected images
-                //                        for item in selectedItems {
-                //                            guard let asset = item.photoAsset else {
-                //                                print("Unable to get PHAsset from selected item.")
-                //                                continue
-                //                            }
-                //
-                //                            PHPhotoLibrary.shared().performChanges {
-                //                                PHAssetChangeRequest.deleteAssets([asset] as NSArray)
-                //                            } completionHandler: { success, error in
-                //                                if success {
-                //                                    print("Image deleted successfully.")
-                //                                } else if let error = error {
-                //                                    print("Error deleting image: \(error.localizedDescription)")
-                //                                }
-                //                            }
-                //                        }
             } else {
                 imagesFailedToSave = true
             }
         }
     }
+
     func invertImages() {
         invertedImages = []
         let dispatchGroup = DispatchGroup()

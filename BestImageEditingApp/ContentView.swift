@@ -32,7 +32,9 @@ struct MultipleSelectView: View {
         List {
             Section {
                 TabView {
-                    ForEach(showInvertedImages ? invertedImages : images, id:\.self){ image in
+                    ForEach(
+                        showInvertedImages ? invertedImages : images, id: \.self
+                    ){ image in
                         GeometryReader { proxy in
                             Image(uiImage: image)
                                 .resizable()
@@ -63,6 +65,7 @@ struct MultipleSelectView: View {
                 }
                 .onChange(of: selectedItems) { selectedItems in
                     images = []
+                    invertedImages = []
                     for item in selectedItems {
                         item.loadTransferable(type: Data.self) { result in
                             switch result {

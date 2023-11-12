@@ -12,7 +12,7 @@ import PhotosUI
 import CoreTransferable
 
 @available(iOS 16.0, *)
-struct MultipleSelectView: View {
+struct InvertImageView: View {
     let context = CIContext()
     
     @State var images: [UIImage] = []
@@ -184,5 +184,5 @@ struct MultipleSelectView: View {
 
 @available(iOS 16.0, *)
 #Preview {
-    MultipleSelectView()
+    InvertImageView()
 }

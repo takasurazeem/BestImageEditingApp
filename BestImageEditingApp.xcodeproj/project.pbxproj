@@ -8,24 +8,26 @@
 
 /* Begin PBXBuildFile section */
 		F96458D82AEC6F930052B30F /* BestImageEditingAppApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = F96458D72AEC6F930052B30F /* BestImageEditingAppApp.swift */; };
-		F96458DA2AEC6F930052B30F /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F96458D92AEC6F930052B30F /* ContentView.swift */; };
+		F96458DA2AEC6F930052B30F /* InvertImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F96458D92AEC6F930052B30F /* InvertImageView.swift */; };
 		F96458DC2AEC6F9C0052B30F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F96458DB2AEC6F9C0052B30F /* Assets.xcassets */; };
 		F96458DF2AEC6F9C0052B30F /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F96458DE2AEC6F9C0052B30F /* Preview Assets.xcassets */; };
 		F98DD0E22B011F1800739670 /* Image+Pinch.swift in Sources */ = {isa = PBXBuildFile; fileRef = F98DD0E12B011F1800739670 /* Image+Pinch.swift */; };
 		F98DD0E52B0159FF00739670 /* Playground.swift in Sources */ = {isa = PBXBuildFile; fileRef = F98DD0E42B0159FF00739670 /* Playground.swift */; };
 		F98DD0E82B01638C00739670 /* WhatToTest.en-US.txt in Resources */ = {isa = PBXBuildFile; fileRef = F98DD0E72B01638C00739670 /* WhatToTest.en-US.txt */; };
+		F98DD0EC2B016A8B00739670 /* ViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F98DD0EB2B016A8B00739670 /* ViewModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		F96458D42AEC6F930052B30F /* BestImageEditingApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BestImageEditingApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F96458D72AEC6F930052B30F /* BestImageEditingAppApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BestImageEditingAppApp.swift; sourceTree = "<group>"; };
-		F96458D92AEC6F930052B30F /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		F96458D92AEC6F930052B30F /* InvertImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InvertImageView.swift; sourceTree = "<group>"; };
 		F96458DB2AEC6F9C0052B30F /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		F96458DE2AEC6F9C0052B30F /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		F98DD0E12B011F1800739670 /* Image+Pinch.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Image+Pinch.swift"; sourceTree = "<group>"; };
 		F98DD0E32B0150D100739670 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		F98DD0E42B0159FF00739670 /* Playground.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Playground.swift; sourceTree = "<group>"; };
 		F98DD0E72B01638C00739670 /* WhatToTest.en-US.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = "WhatToTest.en-US.txt"; sourceTree = "<group>"; };
+		F98DD0EB2B016A8B00739670 /* ViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -61,7 +63,8 @@
 			children = (
 				F98DD0E32B0150D100739670 /* Info.plist */,
 				F96458D72AEC6F930052B30F /* BestImageEditingAppApp.swift */,
-				F96458D92AEC6F930052B30F /* ContentView.swift */,
+				F96458D92AEC6F930052B30F /* InvertImageView.swift */,
+				F98DD0EB2B016A8B00739670 /* ViewModel.swift */,
 				F98DD0E12B011F1800739670 /* Image+Pinch.swift */,
 				F96458DB2AEC6F9C0052B30F /* Assets.xcassets */,
 				F98DD0E42B0159FF00739670 /* Playground.swift */,
@@ -157,9 +160,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F98DD0EC2B016A8B00739670 /* ViewModel.swift in Sources */,
 				F98DD0E52B0159FF00739670 /* Playground.swift in Sources */,
 				F98DD0E22B011F1800739670 /* Image+Pinch.swift in Sources */,
-				F96458DA2AEC6F930052B30F /* ContentView.swift in Sources */,
+				F96458DA2AEC6F930052B30F /* InvertImageView.swift in Sources */,
 				F96458D82AEC6F930052B30F /* BestImageEditingAppApp.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

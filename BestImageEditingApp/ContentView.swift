@@ -132,15 +132,22 @@ struct MultipleSelectView: View {
         PHPhotoLibrary.requestAuthorization(for: .readWrite) { status in
             if status == .authorized {
                 // Save the new images
-                for image in invertedImages {
+                for (index, image) in invertedImages.enumerated() {
                     PHPhotoLibrary.shared().performChanges {
                         PHAssetChangeRequest.creationRequestForAsset(from: image)
                     } completionHandler: { success, error in
                         if success {
-                            showingSavedAlert = true
+                            // Do nothing
                         } else if let error = error {
                             errorMessage = error.localizedDescription
                             imagesFailedToSave = true
+                        }
+                    }
+                    if index == invertedImages.count - 1 {
+                        DispatchQueue.main.async {
+                            images = []
+                            invertedImages = []
+                            self.showingSavedAlert = true
                         }
                     }
                 }

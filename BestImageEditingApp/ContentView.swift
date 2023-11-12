@@ -6,13 +6,15 @@
 //
 
 import SwiftUI
-
-import SwiftUI
+import CoreImage
+import CoreImage.CIFilterBuiltins
 import PhotosUI
 import CoreTransferable
 
 @available(iOS 16.0, *)
 struct MultipleSelectView: View {
+    let context = CIContext()
+    
     @State var images: [UIImage] = []
     @State var invertedImages: [UIImage] = []
     @State private var showInvertedImages = false
@@ -34,8 +36,8 @@ struct MultipleSelectView: View {
                         GeometryReader { proxy in
                             Image(uiImage: image)
                                 .resizable()
-                                .frame(width: proxy.size.width, height: proxy.size.height)
-                                .scaledToFit()
+                                .scaledToFill()
+                            //                                .frame(width: proxy.size.width, height: proxy.size.height)
                                 .clipShape(Rectangle())
                                 .modifier(ImageModifier(contentSize: CGSize(width: proxy.size.width, height: proxy.size.height)))
                                 .accessibilityZoomAction { action in
@@ -111,12 +113,12 @@ struct MultipleSelectView: View {
                     secondaryButton: .default(
                         Text("Open app settings."),
                         action: {
-                    guard let settingsURL = URL(string: UIApplication.openSettingsURLString) else {
-                        return
-                    }
-                    
-                    UIApplication.shared.open(settingsURL)
-                }))
+                            guard let settingsURL = URL(string: UIApplication.openSettingsURLString) else {
+                                return
+                            }
+                            
+                            UIApplication.shared.open(settingsURL)
+                        }))
             }
         }
     }
@@ -150,31 +152,22 @@ struct MultipleSelectView: View {
             }
         }
     }
-
+    
     func invertImages() {
         invertedImages = []
         let dispatchGroup = DispatchGroup()
-
+        let currentFilter: CIFilter = .colorInvert()
         for (_, image) in images.enumerated() {
             dispatchGroup.enter()
-            
             DispatchQueue.global().async {
-                if let ciImage = CIImage(image: image) {
-                    let filter = CIFilter(name: "CIColorControls")
-                    filter?.setValue(ciImage, forKey: kCIInputImageKey)
-                    filter?.setValue(1.0, forKey: kCIInputContrastKey)
-                    filter?.setValue(0.0, forKey: kCIInputBrightnessKey)
-                    filter?.setValue(-1.0, forKey: kCIInputSaturationKey)
-                    
-                    if let outputImage = filter?.outputImage {
-                        let context = CIContext()
-                        if let cgImage = context.createCGImage(outputImage, from: outputImage.extent) {
-                            let uiImage = UIImage(cgImage: cgImage)
-                            DispatchQueue.main.async {
-                                invertedImages.append(uiImage)
-                                dispatchGroup.leave()
-                            }
-                        }
+                let beginImage = CIImage(image: image)
+                currentFilter.setValue(beginImage, forKey: kCIInputImageKey)
+                guard let outputImage = currentFilter.outputImage else { return }
+                if let cgimg = context.createCGImage(outputImage, from: outputImage.extent) {
+                    let uiImage = UIImage(cgImage: cgimg)
+                    DispatchQueue.main.async {
+                        invertedImages.append(uiImage)
+                        dispatchGroup.leave()
                     }
                 }
             }
@@ -189,5 +182,4 @@ struct MultipleSelectView: View {
 @available(iOS 16.0, *)
 #Preview {
     MultipleSelectView()
-        .previewLayout(.fixed(width: 400, height: 300))
 }

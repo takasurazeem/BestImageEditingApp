@@ -21,6 +21,10 @@ struct MultipleSelectView: View {
     @State private var currentZoom = 0.0
     @State private var totalZoom = 1.0
     
+    @State private var showingSavedAlert = false
+    @State private var imagesFailedToSave = false
+    @State private var errorMessage = "Failed to save images. You need to grant the app access to store images. To do this, open the Settings app on your device, scroll down to Invert, and enable access to Photos or just tap the open App Settings Button. Allowing full access will enable the app to store and manage images, providing you with a better experience."
+    
     var body: some View {
         
         List {
@@ -84,24 +88,92 @@ struct MultipleSelectView: View {
                 } label: {
                     Text("Invert Colour")
                 }
+                .disabled(images.isEmpty)
             }
             Section {
                 Button {
-                    // TODO: Save
+                    saveAndDeleteImages()
                 } label: {
                     Text("Save")
                 }
             }
+            .disabled(invertedImages.isEmpty)
+            .alert(isPresented: $showingSavedAlert) {
+                Alert(
+                    title: Text("Images saved"),
+                    message: Text("Thank you for using the app."),
+                    dismissButton: .default(Text("OK"))
+                )
+            }
+            .alert(isPresented: $imagesFailedToSave) {
+                Alert(
+                    title: Text("Images failed to save"),
+                    message: Text(errorMessage),
+                    primaryButton: .default(
+                        Text("Ok"), action: {
+                            imagesFailedToSave = false
+                        }
+                    ),
+                    secondaryButton: .default(
+                        Text("Open app settings."),
+                        action: {
+                    guard let settingsURL = URL(string: UIApplication.openSettingsURLString) else {
+                        return
+                    }
+                    
+                    UIApplication.shared.open(settingsURL)
+                }))
+            }
         }
     }
-
+    func saveAndDeleteImages() {
+        // Request photo library access
+        PHPhotoLibrary.requestAuthorization(for: .readWrite) { status in
+            if status == .authorized {
+                // Save the new images
+                for image in invertedImages {
+                    PHPhotoLibrary.shared().performChanges {
+                        PHAssetChangeRequest.creationRequestForAsset(from: image)
+                    } completionHandler: { success, error in
+                        if success {
+                            showingSavedAlert = true
+                        } else if let error = error {
+                            errorMessage = error.localizedDescription
+                            imagesFailedToSave = true
+                        }
+                    }
+                }
+                
+                // TODO: Fix later.
+                //                        // Delete the previously selected images
+                //                        for item in selectedItems {
+                //                            guard let asset = item.photoAsset else {
+                //                                print("Unable to get PHAsset from selected item.")
+                //                                continue
+                //                            }
+                //
+                //                            PHPhotoLibrary.shared().performChanges {
+                //                                PHAssetChangeRequest.deleteAssets([asset] as NSArray)
+                //                            } completionHandler: { success, error in
+                //                                if success {
+                //                                    print("Image deleted successfully.")
+                //                                } else if let error = error {
+                //                                    print("Error deleting image: \(error.localizedDescription)")
+                //                                }
+                //                            }
+                //                        }
+            } else {
+                imagesFailedToSave = true
+            }
+        }
+    }
     func invertImages() {
         invertedImages = []
         let dispatchGroup = DispatchGroup()
 
         for (_, image) in images.enumerated() {
             dispatchGroup.enter()
-
+            
             DispatchQueue.global().async {
                 if let ciImage = CIImage(image: image) {
                     let filter = CIFilter(name: "CIColorControls")
@@ -109,7 +181,7 @@ struct MultipleSelectView: View {
                     filter?.setValue(1.0, forKey: kCIInputContrastKey)
                     filter?.setValue(0.0, forKey: kCIInputBrightnessKey)
                     filter?.setValue(-1.0, forKey: kCIInputSaturationKey)
-
+                    
                     if let outputImage = filter?.outputImage {
                         let context = CIContext()
                         if let cgImage = context.createCGImage(outputImage, from: outputImage.extent) {
@@ -123,14 +195,11 @@ struct MultipleSelectView: View {
                 }
             }
         }
-
+        
         dispatchGroup.notify(queue: .main) {
             showInvertedImages = true
         }
     }
-
-
-    
 }
 
 @available(iOS 16.0, *)

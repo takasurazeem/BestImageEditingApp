@@ -68,10 +68,10 @@
 				F96458D92AEC6F930052B30F /* InvertImageView.swift */,
 				F98DD0EB2B016A8B00739670 /* ViewModel.swift */,
 				F98DD0E12B011F1800739670 /* Image+Pinch.swift */,
+				F98DD0E92B01654F00739670 /* PhotoManager.swift */,
 				F96458DB2AEC6F9C0052B30F /* Assets.xcassets */,
 				F98DD0E42B0159FF00739670 /* Playground.swift */,
 				F96458DD2AEC6F9C0052B30F /* Preview Content */,
-				F98DD0E92B01654F00739670 /* PhotoManager.swift */,
 			);
 			path = BestImageEditingApp;
 			sourceTree = "<group>";

@@ -31,27 +31,21 @@ struct MultipleSelectView: View {
             Section {
                 TabView {
                     ForEach(showInvertedImages ? invertedImages : images, id:\.self){ image in
-                        Image(uiImage: image)
-                            .resizable()
-                            .scaledToFill()
-                            .scaleEffect(currentZoom + totalZoom)
-                            .gesture(
-                                MagnifyGesture()
-                                    .onChanged { value in
-                                        currentZoom = value.magnification - 1
+                        GeometryReader { proxy in
+                            Image(uiImage: image)
+                                .resizable()
+                                .frame(width: proxy.size.width, height: proxy.size.height)
+                                .scaledToFit()
+                                .clipShape(Rectangle())
+                                .modifier(ImageModifier(contentSize: CGSize(width: proxy.size.width, height: proxy.size.height)))
+                                .accessibilityZoomAction { action in
+                                    if action.direction == .zoomIn {
+                                        totalZoom += 1
+                                    } else {
+                                        totalZoom -= 1
                                     }
-                                    .onEnded { value in
-                                        totalZoom += currentZoom
-                                        currentZoom = 0
-                                    }
-                            )
-                            .accessibilityZoomAction { action in
-                                if action.direction == .zoomIn {
-                                    totalZoom += 1
-                                } else {
-                                    totalZoom -= 1
                                 }
-                            }
+                        }
                     }
                 } //: Tabview
                 .tabViewStyle(PageTabViewStyle())
@@ -65,7 +59,7 @@ struct MultipleSelectView: View {
                 ) {
                     Text("Select Photos")
                 }
-                .onChange(of: selectedItems) {
+                .onChange(of: selectedItems) { selectedItems in
                     images = []
                     for item in selectedItems {
                         item.loadTransferable(type: Data.self) { result in

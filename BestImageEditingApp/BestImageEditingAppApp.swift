@@ -11,7 +11,7 @@ import SwiftUI
 struct BestImageEditingAppApp: App {
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            MultipleSelectView()
         }
     }
 }

@@ -15,6 +15,7 @@
 		F98DD0E52B0159FF00739670 /* Playground.swift in Sources */ = {isa = PBXBuildFile; fileRef = F98DD0E42B0159FF00739670 /* Playground.swift */; };
 		F98DD0E82B01638C00739670 /* WhatToTest.en-US.txt in Resources */ = {isa = PBXBuildFile; fileRef = F98DD0E72B01638C00739670 /* WhatToTest.en-US.txt */; };
 		F98DD0EC2B016A8B00739670 /* ViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F98DD0EB2B016A8B00739670 /* ViewModel.swift */; };
+		F98DD0EA2B01654F00739670 /* PhotoManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F98DD0E92B01654F00739670 /* PhotoManager.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -28,6 +29,7 @@
 		F98DD0E42B0159FF00739670 /* Playground.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Playground.swift; sourceTree = "<group>"; };
 		F98DD0E72B01638C00739670 /* WhatToTest.en-US.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = "WhatToTest.en-US.txt"; sourceTree = "<group>"; };
 		F98DD0EB2B016A8B00739670 /* ViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewModel.swift; sourceTree = "<group>"; };
+		F98DD0E92B01654F00739670 /* PhotoManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoManager.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -66,6 +68,7 @@
 				F96458D92AEC6F930052B30F /* InvertImageView.swift */,
 				F98DD0EB2B016A8B00739670 /* ViewModel.swift */,
 				F98DD0E12B011F1800739670 /* Image+Pinch.swift */,
+				F98DD0E92B01654F00739670 /* PhotoManager.swift */,
 				F96458DB2AEC6F9C0052B30F /* Assets.xcassets */,
 				F98DD0E42B0159FF00739670 /* Playground.swift */,
 				F96458DD2AEC6F9C0052B30F /* Preview Content */,
@@ -164,6 +167,8 @@
 				F98DD0E52B0159FF00739670 /* Playground.swift in Sources */,
 				F98DD0E22B011F1800739670 /* Image+Pinch.swift in Sources */,
 				F96458DA2AEC6F930052B30F /* InvertImageView.swift in Sources */,
+				F96458DA2AEC6F930052B30F /* ContentView.swift in Sources */,
+				F98DD0EA2B01654F00739670 /* PhotoManager.swift in Sources */,
 				F96458D82AEC6F930052B30F /* BestImageEditingAppApp.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

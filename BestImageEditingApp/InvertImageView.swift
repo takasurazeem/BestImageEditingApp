@@ -18,13 +18,13 @@ struct InvertImageView: View {
             Section {
                 TabView {
                     ForEach(
-                        viewModel.showInvertedImages ? viewModel.invertedImages : viewModel.images, id: \.self
-                    ){ image in
+                        viewModel.showInvertedImages ? viewModel.invertedImages.indices : viewModel.images.indices, id: \.self
+                    ){ index in
+                        let image = viewModel.showInvertedImages ? viewModel.invertedImages[index] : viewModel.images[index]
                         GeometryReader { proxy in
                             Image(uiImage: image)
                                 .resizable()
-                                .scaledToFill()
-                            //                                .frame(width: proxy.size.width, height: proxy.size.height)
+                                .scaledToFit()
                                 .clipShape(Rectangle())
                                 .modifier(ImageModifier(contentSize: CGSize(width: proxy.size.width, height: proxy.size.height)))
                                 .accessibilityZoomAction { action in
@@ -34,6 +34,12 @@ struct InvertImageView: View {
                                         viewModel.totalZoom -= 1
                                     }
                                 }
+                        }
+                        .background {
+                            Image(uiImage: viewModel.images[index])
+                                .resizable()
+                                .scaledToFill()
+                                .blur(radius: 3)
                         }
                     }
                 } //: Tabview

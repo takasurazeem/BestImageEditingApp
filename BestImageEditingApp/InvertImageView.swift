@@ -66,32 +66,38 @@ struct InvertImageView: View {
                     Text("Save")
                 }
             }
-            .disabled(viewModel.invertedImages.isEmpty)
-            .alert(isPresented: $viewModel.showingSavedAlert) {
-                Alert(
-                    title: Text("Images saved"),
-                    message: Text("Thank you for using the app."),
-                    dismissButton: .default(Text("OK"))
-                )
+            .overlay {
+                EmptyView()
+                    .alert(isPresented: $viewModel.showingSavedAlert) {
+                        Alert(
+                            title: Text("Images saved"),
+                            message: Text("Thank you for using the app."),
+                            dismissButton: .default(Text("OK"))
+                        )
+                    }
             }
-            .alert(isPresented: $viewModel.imagesFailedToSave) {
-                Alert(
-                    title: Text("Images failed to save"),
-                    message: Text(viewModel.errorMessage),
-                    primaryButton: .default(
-                        Text("Ok"), action: {
-                            viewModel.imagesFailedToSave = false
-                        }
-                    ),
-                    secondaryButton: .default(
-                        Text("Open app settings."),
-                        action: {
-                            guard let settingsURL = URL(string: UIApplication.openSettingsURLString) else {
-                                return
-                            }
-                            
-                            UIApplication.shared.open(settingsURL)
-                        }))
+            .disabled(viewModel.invertedImages.isEmpty)
+            .overlay {
+                EmptyView()
+                    .alert(isPresented: $viewModel.imagesFailedToSave) {
+                        Alert(
+                            title: Text("Images failed to save"),
+                            message: Text(viewModel.errorMessage),
+                            primaryButton: .default(
+                                Text("Ok"), action: {
+                                    viewModel.imagesFailedToSave = false
+                                }
+                            ),
+                            secondaryButton: .default(
+                                Text("Open app settings."),
+                                action: {
+                                    guard let settingsURL = URL(string: UIApplication.openSettingsURLString) else {
+                                        return
+                                    }
+                                    
+                                    UIApplication.shared.open(settingsURL)
+                                }))
+                    }
             }
         }
     }

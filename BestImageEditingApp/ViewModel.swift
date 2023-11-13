@@ -77,20 +77,21 @@ extension InvertImageView {
         ) {
             images = []
             invertedImages = []
+            showInvertedImages = false
             for item in selectedItems {
-                item.loadTransferable(type: Data.self) { result in
-                    switch result {
-                    case .success(let imageData):
-                        if let imageData {
-                            DispatchQueue.main.async { [weak self] in
-                                guard let self else { return }
-                                self.images.append(UIImage(data: imageData)!)
+                item.loadTransferable(type: Data.self) { [weak self] result in
+                    guard let self else { return }
+                    DispatchQueue.main.async {
+                        switch result {
+                        case .success(let imageData):
+                            if let imageData, let uiImage = UIImage(data: imageData) {
+                                self.images.append(uiImage)
+                            } else {
+                                print("No supported content type found.")
                             }
-                        } else {
-                            print("No supported content type found.")
+                        case .failure(let error):
+                            print(error)
                         }
-                    case .failure(let error):
-                        print(error)
                     }
                 }
             }

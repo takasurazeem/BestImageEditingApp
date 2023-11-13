@@ -12,7 +12,7 @@ import PhotosUI
 import CoreTransferable
 
 extension InvertImageView {
-    class ViewModel: ObservableObject {
+    @MainActor class ViewModel: ObservableObject {
         
         func invertImages() {
             invertedImages = []
@@ -82,7 +82,10 @@ extension InvertImageView {
                     switch result {
                     case .success(let imageData):
                         if let imageData {
-                            self.images.append(UIImage(data: imageData)!)
+                            DispatchQueue.main.async { [weak self] in
+                                guard let self else { return }
+                                self.images.append(UIImage(data: imageData)!)
+                            }
                         } else {
                             print("No supported content type found.")
                         }

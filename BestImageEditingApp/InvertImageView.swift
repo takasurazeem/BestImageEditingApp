@@ -19,7 +19,7 @@ struct InvertImageView: View {
                 TabView {
                     ForEach(
                         viewModel.showInvertedImages ? viewModel.invertedImages.indices : viewModel.images.indices, id: \.self
-                    ){ index in
+                    ) { index in
                         let image = viewModel.showInvertedImages ? viewModel.invertedImages[index] : viewModel.images[index]
                         GeometryReader { proxy in
                             Image(uiImage: image)
